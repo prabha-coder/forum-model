@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+   <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+
+    <title>Amarantos Forum</title>
+    <style type="text/css">
+      a:link {
+  text-decoration: none;
+}
+
+      .card-title{
+        color: green;
+      }
+      .card-text{
+        color:blue;
+      }
+      .navbar, .navbar-expand-sm {
+        color: white;
+        background: #b4e391; /* Old browsers */
+background: -moz-linear-gradient(top, #b4e391 0%, #61c419 50%, #b4e391 100%); /* FF3.6-15 */
+background: -webkit-linear-gradient(top, #b4e391 0%,#61c419 50%,#b4e391 100%); /* Chrome10-25,Safari5.1-6 */
+background: linear-gradient(to bottom, #b4e391 0%,#61c419 50%,#b4e391 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#b4e391', endColorstr='#b4e391',GradientType=0 );
+      }
+    </style>
+  </head>
+  <body>
+ <nav class="navbar navbar-expand-sm navbar-dark">
+  <ul class="navbar-nav">
+    <li class="nav-item active">
+      <a class="nav-link" href="#">Latest</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="#">Top</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="#">Category</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link disabled" href="#">Unread</a>
+    </li>
+  </ul>
+</nav>
+
+
+<div class="container-fluid">
+  <center><img src="http://s3.ap-south-1.amazonaws.com/discourse-amarantos/Amarantos+Header+for+Forum.gif" style="margin-top: 5px;" class="img-fluid" alt="Amarantos"></center>
+  <div class="row" style="margin-left: 1px;">
+   
+  </div>
+</div>
+<script>
+  
+ 
+  $(document).ready(function () { 
+
+
+          
+     $.ajax({
+                       url: "https://secret-ocean-49799.herokuapp.com/https://forum.amarantos.org/latest.json",
+                       type: 'GET',
+                       dataType: 'json',
+            
+                      
+               success: function(data) {
+
+                  cardUname = [];
+                  cardUtitle = [];
+                  cardUslug = [];
+
+                  user_Count = Object.keys(data.users);
+                  for(i=0; i<user_Count.length; i++){
+
+                   cardUname[i] = data.users[i].username;
+                   cardUtitle[i] = data.topic_list.topics[i].title;
+                   cardUslug[i] = 'https://forum.amarantos.org/t/'+data.topic_list.topics[i].slug;
+                   
+                      }
+                    for(i=1; i<user_Count.length; i++){
+                      makebody = '<a href="'+cardUslug[i]+'"><div class="card" style="width: 10rem;height:16rem;margin:5px;"><img src="https://cdn.pixabay.com/photo/2015/11/07/11/45/mountain-lake-1031458_1280.jpg" class="card-img-top img-fluid" alt="..."><div class="card-body"><h6 class="card-title">'+cardUtitle[i]+'</h6><h7 class="card-subtitle mb-2 text-muted">'+cardUname[i]+'</h7> </div></div></a>';
+                      $('.row').append(makebody);
+                      /*$('#cardtitles'+i).append(cardUtitle[i]);
+                      $('#cardnames'+i).append(cardUname[i]);
+                      $('#cardU'+i).click(function(){
+    window.location = cardUslug[i];
+});*/
+                    }
+              }
+              });
+      });
+</script>
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    
+
+  </body>
+</html>
